@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        Timer.setTimer(25);
+        Timer.startTimer();
     }
 
     @Override
