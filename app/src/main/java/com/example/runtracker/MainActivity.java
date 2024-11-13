@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Timer.setTimer(25);
+        Timer.setTimer(60);
         Timer.startTimer();
     }
 

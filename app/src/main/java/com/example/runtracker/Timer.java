@@ -7,6 +7,9 @@
 package com.example.runtracker;
 
 import android.util.Log;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 /**
  * Creates a timer to be used to track running time.
@@ -15,6 +18,11 @@ public class Timer {
     private static Boolean running = false;
     private static Boolean timerFinished = false;
     private static int time = 0;
+
+    private static TextView timerTextView;
+    public Timer(TextView textView) {
+        this.timerTextView = textView;
+    }
 
     /**
      * A thread that counts down every second.
@@ -33,6 +41,8 @@ public class Timer {
                 }
                 time--;
                 Log.d("Timer", String.valueOf(time));
+                String timeStr = String.valueOf(time);
+                timerTextView.setText(timeStr);
             }
 
             if (time <= 0) {

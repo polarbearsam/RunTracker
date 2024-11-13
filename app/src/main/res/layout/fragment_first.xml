@@ -25,22 +25,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/editTextTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="98dp"
-                android:layout_marginTop="19dp"
-                android:layout_marginEnd="87dp"
-                android:layout_marginBottom="16dp"
-                android:ems="10"
-                android:inputType="time"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
-                tools:text="INSERT TIME HERE" />
-
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="170dp"
@@ -48,14 +32,27 @@
                 android:layout_marginStart="136dp"
                 android:layout_marginTop="49dp"
                 android:layout_marginEnd="89dp"
-                android:layout_marginBottom="19dp"
                 android:text="timeBox"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                app:layout_constraintBottom_toTopOf="@+id/editTextTime"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/button_first"
                 tools:text="Current Time:" />
+
+            <TextView
+                android:id="@+id/timerTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="178dp"
+                android:layout_marginTop="377dp"
+                android:layout_marginEnd="159dp"
+                android:layout_marginBottom="191dp"
+                android:text="00:00:00"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>
