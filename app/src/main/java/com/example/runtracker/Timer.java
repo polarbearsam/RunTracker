@@ -22,12 +22,14 @@ public class Timer {
     private static void runTimer() {
         // Must be run as a separate thread every time
         // TODO: This code is non-functional.
+        timerFinished = false;
+
         Thread thread = new Thread(() -> {
             while (time > 0 && running) {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    Log.e("Timer", "Sleep interrupted!", new RuntimeException(e));
                 }
                 time--;
                 Log.d("Timer", String.valueOf(time));
@@ -36,8 +38,10 @@ public class Timer {
             if (time <= 0) {
                 resetTimer();
                 timerFinished = true;
+                Log.i("Timer", "Timer finished!");
             } else {
                 timerFinished = false;
+                Log.i("Timer", "Timer stopped.");
             }
         });
         thread.start();
@@ -45,18 +49,20 @@ public class Timer {
 
     /**
      * Adds given amount of time to timer
-     * @param time to add to timer in seconds
+     * @param seconds to add to timer in seconds
      */
-    public static void addTime(int time) {
-        Timer.time += time;
+    public static void addTime(int seconds) {
+        time += seconds;
+        Log.i("Timer", "Adding " + String.valueOf(seconds) + " seconds to timer.");
     }
 
     /**
      * Sets timer to specific value
-     * @param time to set timer to in seconds
+     * @param seconds to set timer to in seconds
      */
-    public static void setTimer(int time) {
-        Timer.time = time;
+    public static void setTimer(int seconds) {
+        time = seconds;
+        Log.i("Timer", "Setting timer to " + String.valueOf(seconds) + " seconds.");
     }
 
     /**
@@ -68,9 +74,29 @@ public class Timer {
     }
 
     /**
+     * Resumes the timer
+     */
+    public static void resumeTimer() {
+        if (!running) {
+            running = true;
+            runTimer();
+        }
+    }
+
+    /**
      * Starts the timer
      */
     public static void startTimer() {
+        running = true;
+        runTimer();
+    }
+
+    /**
+     * Starts the timer
+     * @param seconds = amount of seconds the timer will run for
+     */
+    public static void startTimer(int seconds) {
+        time = seconds;
         running = true;
         runTimer();
     }
@@ -88,5 +114,6 @@ public class Timer {
     public static void resetTimer() {
         running = false;
         time = 0;
+        timerFinished = false;
     }
 }
