@@ -8,6 +8,8 @@ package com.example.runtracker;
 
 import android.util.Log;
 import android.widget.TextView;
+import android.os.Handler;
+import android.os.Looper;
 
 import org.w3c.dom.Text;
 
@@ -15,22 +17,30 @@ import org.w3c.dom.Text;
  * Creates a timer to be used to track running time.
  */
 public class Timer {
-    private static Boolean running = false;
-    private static Boolean timerFinished = false;
-    private static int time = 0;
+    private Boolean running = false;
+    private Boolean timerFinished = false;
+    private int time = 0;
 
-    private static TextView timerTextView;
+    private final TextView timerTextView;
+
+    private final Handler handler;
     public Timer(TextView textView) {
         this.timerTextView = textView;
+        this.handler = new Handler(Looper.getMainLooper());
+    }
+
+    private void updateGUI() {
+        handler.post(() -> timerTextView.setText(String.valueOf(time)));
     }
 
     /**
      * A thread that counts down every second.
      */
-    private static void runTimer() {
+    private void runTimer() { //I was not able to update the GUI from this function if it is static, so i made it not static for now - Brian Downey
         // Must be run as a separate thread every time
         // TODO: This code is non-functional.
         timerFinished = false;
+
 
         Thread thread = new Thread(() -> {
             while (time > 0 && running) {
@@ -41,8 +51,7 @@ public class Timer {
                 }
                 time--;
                 Log.d("Timer", String.valueOf(time));
-                String timeStr = String.valueOf(time);
-                timerTextView.setText(timeStr);
+                updateGUI();
             }
 
             if (time <= 0) {
@@ -61,7 +70,7 @@ public class Timer {
      * Adds given amount of time to timer
      * @param seconds to add to timer in seconds
      */
-    public static void addTime(int seconds) {
+    public void addTime(int seconds) {
         time += seconds;
         Log.i("Timer", "Adding " + String.valueOf(seconds) + " seconds to timer.");
     }
@@ -70,7 +79,7 @@ public class Timer {
      * Sets timer to specific value
      * @param seconds to set timer to in seconds
      */
-    public static void setTimer(int seconds) {
+    public void setTimer(int seconds) {
         time = seconds;
         Log.i("Timer", "Setting timer to " + String.valueOf(seconds) + " seconds.");
     }
@@ -79,14 +88,14 @@ public class Timer {
      * Gets remaining time on timer
      * @return remaining time in seconds
      */
-    public static int getRemainingTime() {
+    public int getRemainingTime() {
         return time;
     }
 
     /**
      * Resumes the timer
      */
-    public static void resumeTimer() {
+    public void resumeTimer() {
         if (!running) {
             running = true;
             runTimer();
@@ -96,7 +105,7 @@ public class Timer {
     /**
      * Starts the timer
      */
-    public static void startTimer() {
+    public void startTimer() {
         running = true;
         runTimer();
     }
@@ -105,7 +114,7 @@ public class Timer {
      * Starts the timer
      * @param seconds = amount of seconds the timer will run for
      */
-    public static void startTimer(int seconds) {
+    public void startTimer(int seconds) {
         time = seconds;
         running = true;
         runTimer();
@@ -114,14 +123,14 @@ public class Timer {
     /**
      * Stops the timer
      */
-    public static void stopTimer() {
+    public void stopTimer() {
         running = false;
     }
 
     /**
      * Resets the timer to 0 and stops the timer.
      */
-    public static void resetTimer() {
+    public void resetTimer() {
         running = false;
         time = 0;
         timerFinished = false;

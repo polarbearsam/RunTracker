@@ -17,11 +17,14 @@ import com.example.runtracker.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +47,11 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        TextView timerTextView = findViewById(R.id.timerTextView);
+        timer = new Timer(timerTextView);
 
-        Timer.setTimer(60);
-        Timer.startTimer();
+        timer.setTimer(60);
+        timer.startTimer();
     }
 
     @Override
