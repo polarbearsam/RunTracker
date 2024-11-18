@@ -11,8 +11,6 @@ import android.widget.TextView;
 import android.os.Handler;
 import android.os.Looper;
 
-import org.w3c.dom.Text;
-
 /**
  * Creates a timer to be used to track running time.
  */
@@ -76,20 +74,20 @@ public class Timer {
     }
 
     /**
-     * Sets timer to specific value
-     * @param seconds to set timer to in seconds
-     */
-    public void setTimer(int seconds) {
-        time = seconds;
-        Log.i("Timer", "Setting timer to " + String.valueOf(seconds) + " seconds.");
-    }
-
-    /**
      * Gets remaining time on timer
      * @return remaining time in seconds
      */
     public int getRemainingTime() {
         return time;
+    }
+
+    /**
+     * Resets the timer to 0 and stops the timer.
+     */
+    public void resetTimer() {
+        running = false;
+        time = 0;
+        timerFinished = false;
     }
 
     /**
@@ -100,6 +98,15 @@ public class Timer {
             running = true;
             runTimer();
         }
+    }
+
+    /**
+     * Sets timer to specific value
+     * @param seconds to set timer to in seconds
+     */
+    public void setTimer(int seconds) {
+        time = seconds;
+        Log.i("Timer", "Setting timer to " + String.valueOf(seconds) + " seconds.");
     }
 
     /**
@@ -128,11 +135,10 @@ public class Timer {
     }
 
     /**
-     * Resets the timer to 0 and stops the timer.
+     * Checks if the timer has reached zero.
+     * @return timerFinished (true if timer reached zero, otherwise false)
      */
-    public void resetTimer() {
-        running = false;
-        time = 0;
-        timerFinished = false;
+    public Boolean getTimerFinished() {
+        return timerFinished;
     }
 }
