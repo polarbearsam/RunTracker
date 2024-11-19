@@ -107,6 +107,8 @@ public class Timer {
     public void setTimer(int seconds) {
         time = seconds;
         Log.i("Timer", "Setting timer to " + String.valueOf(seconds) + " seconds.");
+        Log.d("Timer", String.valueOf(time));
+        updateGUI();
     }
 
     /**

@@ -17,6 +17,7 @@ import com.example.runtracker.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // initializes the timer and sends timerTextView to it
+        TextView timerTextView = findViewById(R.id.timerTextView);
+        timer = new Timer(timerTextView);
+
+        // initializes buttons
+        Button setButton = findViewById(R.id.setButton);
+        Button startButton = findViewById(R.id.startButton);
+        Button resetButton = findViewById(R.id.resetButton);
+
         setSupportActionBar(binding.toolbar);
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -47,12 +57,33 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        TextView timerTextView = findViewById(R.id.timerTextView);
-        timer = new Timer(timerTextView);
 
-        timer.setTimer(60);
-        timer.startTimer();
+        // setButton action listener, runs code on button click
+        setButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // sets the timer to 60 seconds | This will become a user inputted variable later
+                timer.setTimer(60);
+            }
+        });
+
+        // startButton action listener, runs code on button click
+        startButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // starts the timer
+                timer.startTimer();
+            }
+        });
+
+        // resetButton action listener, runs code on button click
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // resets the timer to 0s and stops it running
+                timer.resetTimer();
+            }
+        });
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
