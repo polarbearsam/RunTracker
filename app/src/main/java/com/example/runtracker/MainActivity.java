@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 
     private Timer timer;
+    
+    private EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +65,10 @@ public class MainActivity extends AppCompatActivity {
         setButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // sets the timer to 60 seconds | This will become a user inputted variable later
-                timer.setTimer(60);
+                editText = findViewById(R.id.editText);
+                String userTime = editText.getText().toString();
+                int userNumber = Integer.parseInt(userTime);
+                timer.setTimer(userNumber);
             }
         });
 
