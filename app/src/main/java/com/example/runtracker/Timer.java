@@ -130,6 +130,35 @@ public class Timer {
     }
 
     /**
+     * Converts a given number of seconds into minutes
+     * @param seconds time to convert
+     * @return minutes
+     */
+    public int getMinutesFromSeconds(int seconds) {
+        return seconds / 60;
+    }
+
+    /**
+     * Converts a given number of seconds into minutes and returns remaining seconds in that minute.
+     * @param seconds time to convert
+     * @return remaining seconds in the minutes
+     */
+    public int getRemainingSeconds(int seconds) {
+        return seconds % 60;
+    }
+
+    /**
+     * Returns current time in minutes and seconds.
+     * @return Array containing remaining minutes and remaining seconds in that order.
+     */
+    public int[] getCurrentTime() {
+        int[] currentTime = new int[2];
+        currentTime[0] = getMinutesFromSeconds(time);
+        currentTime[1] = getRemainingSeconds(time);
+        return currentTime;
+    }
+
+    /**
      * Stops the timer
      */
     public void stopTimer() {
