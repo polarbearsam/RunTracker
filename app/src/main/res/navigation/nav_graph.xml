@@ -25,4 +25,10 @@
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/PreferencesFragment"
+        android:name="com.example.runtracker.PreferencesFragment"
+        android:label="Preferences Fragment"
+        tools:layout="@layout/fragment_preferences">
+    </fragment>
 </navigation>
