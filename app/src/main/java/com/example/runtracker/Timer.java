@@ -53,8 +53,9 @@ public class Timer {
             }
 
             if (time <= 0) {
-                resetTimer();
+                Log.i("Timer", "Timer finished (start)!");
                 timerFinished = true;
+                resetTimer();
                 Log.i("Timer", "Timer finished!");
             } else {
                 timerFinished = false;
@@ -87,7 +88,7 @@ public class Timer {
     public void resetTimer() {
         running = false;
         time = 0;
-        timerFinished = false;
+        //timerFinished = false;
     }
 
     /**
@@ -156,6 +157,10 @@ public class Timer {
         currentTime[0] = getMinutesFromSeconds(time);
         currentTime[1] = getRemainingSeconds(time);
         return currentTime;
+    }
+
+    public Boolean isRunning() {
+        return running;
     }
 
     /**

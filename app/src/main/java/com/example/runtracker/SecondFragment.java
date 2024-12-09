@@ -26,6 +26,7 @@ public class SecondFragment extends Fragment {
 
     }
 
+    /*
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -34,6 +35,7 @@ public class SecondFragment extends Fragment {
                         .navigate(R.id.action_SecondFragment_to_FirstFragment)
         );
     }
+     */
 
     @Override
     public void onDestroyView() {
