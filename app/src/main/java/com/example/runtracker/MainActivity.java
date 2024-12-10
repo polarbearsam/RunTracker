@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
@@ -19,6 +20,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.EditText;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -39,13 +42,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         createNotificationChannel();
 
         notificationHandler = new NotificationHandler(this);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+
 
         // initializes the timer and sends timerTextView to it
         TextView timerTextView = findViewById(R.id.timerTextView);
@@ -55,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
         Button setButton = findViewById(R.id.setButton);
         Button startButton = findViewById(R.id.startButton);
         Button resetButton = findViewById(R.id.resetButton);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         //setSupportActionBar(binding.toolbar);
 
@@ -115,38 +121,42 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-     */
 
-    /*
+
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.home) {
+            replaceFragment(new FirstFragment());
             return true;
+        } else if (id == R.id.preferences) {
+            replaceFragment(new PreferencesFragment());
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
-    */
 
-    @Override
+    private void replaceFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
+    }
+
+
+    /*@Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
-    }
+    }*/
 
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
