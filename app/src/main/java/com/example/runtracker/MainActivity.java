@@ -13,30 +13,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.EditText;
+
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.fragment.app.FragmentManager;
 
-import com.example.runtracker.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityMainBinding binding;
-
-    public Timer timer;
-    
-    public EditText editText;
     public NotificationHandler notificationHandler;
 
     @Override
@@ -47,77 +34,15 @@ public class MainActivity extends AppCompatActivity {
         createNotificationChannel();
 
         notificationHandler = new NotificationHandler(this);
+        Log.d("MainActivity", "NotificationHandler initialized: " + (notificationHandler != null));
 
-
-
-        // initializes the timer and sends timerTextView to it
-        TextView timerTextView = findViewById(R.id.timerTextView);
-        timer = new Timer(timerTextView);
-
-        // initializes buttons
-        Button setButton = findViewById(R.id.setButton);
-        Button startButton = findViewById(R.id.startButton);
-        Button resetButton = findViewById(R.id.resetButton);
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FirstFragment()).commit();
+        }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //setSupportActionBar(binding.toolbar);
-
-        /*
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-         */
-
-        /*
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAnchorView(R.id.fab)
-                        .setAction("Action", null).show();
-            }
-        });
-
-         */
-
-        // setButton action listener, runs code on button click
-        setButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // sets the timer to 60 seconds | This will become a user inputted variable later
-                Log.d("MainActivity", "setButton clicked");
-                editText = findViewById(R.id.editText);
-                String userTime = editText.getText().toString();
-                int userNumber = Integer.parseInt(userTime);
-                timer.setTimer(userNumber);
-            }
-        });
-
-        // startButton action listener, runs code on button click
-        startButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // starts the timer
-                timer.startTimer();
-
-                while (timer.isRunning()) {
-
-                }
-                Log.d("MainActivity", String.valueOf(timer.getTimerFinished()));
-
-                if (timer.getTimerFinished()) {
-                    notificationHandler.sendNotification(notificationHandler.createNotification());
-                }
-            }
-        });
-
-        // resetButton action listener, runs code on button click
-        resetButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // resets the timer to 0s and stops it running
-                timer.resetTimer();
-            }
-        });
 
     }
 
@@ -146,7 +71,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void clearBackStack() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        while (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStackImmediate();
+        }
+    }
+
     private void replaceFragment(Fragment fragment) {
+        clearBackStack();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
     }
 

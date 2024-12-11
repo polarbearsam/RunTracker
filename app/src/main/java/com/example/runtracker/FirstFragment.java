@@ -5,45 +5,85 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
-
-import com.example.runtracker.databinding.FragmentFirstBinding;
+import com.example.runtracker.NotificationHandler;
 
 public class FirstFragment extends Fragment {
 
-    private FragmentFirstBinding binding;
+    private Timer timer;
+    private NotificationHandler notificationHandler;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState
     ) {
 
+
         return inflater.inflate(R.layout.fragment_first, container, false);
 
 
     }
 
+    @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //getting the notification handler from main activity
+        notificationHandler = ((MainActivity) requireActivity()).notificationHandler;
+        Log.d("FirstFragment", "MainActivity and NotificationHandler initialized: " + (notificationHandler != null));
 
-        binding.setButton.setOnClickListener(v ->
-                Log.d("FirstFragment", "setButton clicked")
-                /*
-                NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment)
-                */
-        );
+        //widgets
+        TextView timerTextView = view.findViewById(R.id.timerTextView);
+        EditText editText = view.findViewById(R.id.editText);
+        Button setButton = view.findViewById(R.id.setButton);
+        Button startButton = view.findViewById(R.id.startButton);
+        Button resetButton = view.findViewById(R.id.resetButton);
+
+        //Initializing timer
+        timer = new Timer(timerTextView);
+
+
+
+        // setButton action listener, runs code on button click
+        setButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // sets the timer to 60 seconds | This will become a user inputted variable later
+                Log.d("FirstFragment", "setButton clicked");
+                String userTime = editText.getText().toString();
+                int userNumber = Integer.parseInt(userTime);
+                timer.setTimer(userNumber);
+            }
+        });
+
+        // startButton action listener, runs code on button click
+        startButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // starts the timer
+                timer.startTimer();
+                Log.d("FirstFragment", String.valueOf(timer.getTimerFinished()));
+                if (timer.getTimerFinished()) {
+                    notificationHandler.sendNotification(notificationHandler.createNotification());
+                    Log.d("FirstFragment", "NotificationHandler in fragment: " + (notificationHandler != null));
+                }
+            }
+        });
+
+        // resetButton action listener, runs code on button click
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // resets the timer to 0s and stops it running
+                timer.resetTimer();
+            }
+        });
+
+
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
 
 }
