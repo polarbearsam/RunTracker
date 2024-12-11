@@ -57,7 +57,7 @@ public class FirstFragment extends Fragment {
                 Log.d("FirstFragment", "setButton clicked");
                 String userTime = editText.getText().toString();
                 int userNumber = Integer.parseInt(userTime);
-                timer.setTimer(userNumber);
+                timer.setTimer(userNumber * 60); // Assumes user will input minutes.
             }
         });
 
@@ -66,11 +66,22 @@ public class FirstFragment extends Fragment {
             public void onClick(View v) {
                 // starts the timer
                 timer.startTimer();
-                Log.d("FirstFragment", String.valueOf(timer.getTimerFinished()));
-                if (timer.getTimerFinished()) {
-                    notificationHandler.sendNotification(notificationHandler.createNotification());
-                    Log.d("FirstFragment", "NotificationHandler in fragment: " + (notificationHandler != null));
-                }
+                Thread thread = new Thread(() -> {
+                    while (timer.isRunning()) {
+                        try {
+                            Thread.sleep(250);
+                        } catch (InterruptedException e) {
+                            Log.e("FirstFragment", "Sleep interrupted!", new RuntimeException(e));
+                        }
+                    }
+                    Log.d("FirstFragment", String.valueOf(timer.getTimerFinished()));
+                    if (timer.getTimerFinished()) {
+                        notificationHandler.sendNotification(notificationHandler.createNotification());
+                        Log.d("FirstFragment", "NotificationHandler in fragment: " + (notificationHandler != null));
+                    }
+                });
+
+                thread.start();
             }
         });
 

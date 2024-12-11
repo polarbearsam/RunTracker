@@ -36,9 +36,6 @@ public class Timer {
      */
     private void runTimer() { //I was not able to update the GUI from this function if it is static, so i made it not static for now - Brian Downey
         // Must be run as a separate thread every time
-        // TODO: This code is non-functional.
-        timerFinished = false;
-
 
         Thread thread = new Thread(() -> {
             while (time > 0 && running) {
@@ -55,7 +52,7 @@ public class Timer {
             if (time <= 0) {
                 Log.i("Timer", "Timer finished (start)!");
                 timerFinished = true;
-                resetTimer();
+                running = false;
                 Log.i("Timer", "Timer finished!");
             } else {
                 timerFinished = false;
@@ -88,7 +85,6 @@ public class Timer {
     public void resetTimer() {
         running = false;
         time = 0;
-        //timerFinished = false;
     }
 
     /**
