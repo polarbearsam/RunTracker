@@ -1,7 +1,7 @@
 /**
  * Author: Samuel Freer
  * Created: 10/30/2024
- * Modified: 10/30/2024
+ * Modified: 12/13/2024
  * Creates a timer to be used to track running time.
  */
 package com.example.runtracker;
@@ -15,51 +15,51 @@ import android.os.Looper;
  * Creates a timer to be used to track running time.
  */
 public class Timer {
+    // VARIABLES
     private Boolean running = false;
     private Boolean timerFinished = false;
-    private int time = 0;
-
     private final TextView timerTextView;
-
     private final Handler handler;
+    private int timeRemaining = 0;
+
+    /**
+     * Creates a timer object
+     * @param textView timer will update
+     */
     public Timer(TextView textView) {
         this.timerTextView = textView;
         this.handler = new Handler(Looper.getMainLooper());
     }
 
-    private void updateGUI() {
-        handler.post(() -> timerTextView.setText(String.valueOf(time)));
-    }
-
     /**
      * A thread that counts down every second.
      */
-    private void runTimer() { //I was not able to update the GUI from this function if it is static, so i made it not static for now - Brian Downey
-        // Must be run as a separate thread every time
+    private void runTimer() {
+        running = true;
 
+        // Decreasing timeRemaining by 1 every second, must be run as a separate thread
         Thread thread = new Thread(() -> {
-            while (time > 0 && running) {
+            while (timeRemaining > 0 && running) {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     Log.e("Timer", "Sleep interrupted!", new RuntimeException(e));
                 }
-                time--;
-                Log.d("Timer", String.valueOf(time));
+                timeRemaining--;
+                //Log.d("Timer", String.valueOf(timeRemaining));
                 updateGUI();
             }
 
-            if (time <= 0) {
-                Log.i("Timer", "Timer finished (start)!");
+            if (timeRemaining <= 0) {
                 timerFinished = true;
                 running = false;
                 Log.i("Timer", "Timer finished!");
             } else {
-                timerFinished = false;
                 Log.i("Timer", "Timer stopped.");
             }
         });
-        thread.start();
+
+        thread.start(); // Runs the previous code as a separate thread.
     }
 
     /**
@@ -67,7 +67,7 @@ public class Timer {
      * @param seconds to add to timer in seconds
      */
     public void addTime(int seconds) {
-        time += seconds;
+        timeRemaining += seconds;
         Log.i("Timer", "Adding " + String.valueOf(seconds) + " seconds to timer.");
     }
 
@@ -75,8 +75,8 @@ public class Timer {
      * Gets remaining time on timer
      * @return remaining time in seconds
      */
-    public int getRemainingTime() {
-        return time;
+    public int getTimeRemaining() {
+        return timeRemaining;
     }
 
     /**
@@ -84,7 +84,8 @@ public class Timer {
      */
     public void resetTimer() {
         running = false;
-        time = 0;
+        timerFinished = false;
+        timeRemaining = 0;
     }
 
     /**
@@ -102,9 +103,8 @@ public class Timer {
      * @param seconds to set timer to in seconds
      */
     public void setTimer(int seconds) {
-        time = seconds;
         Log.i("Timer", "Setting timer to " + String.valueOf(seconds) + " seconds.");
-        Log.d("Timer", String.valueOf(time));
+        timeRemaining = seconds;
         updateGUI();
     }
 
@@ -121,7 +121,10 @@ public class Timer {
      * @param seconds = amount of seconds the timer will run for
      */
     public void startTimer(int seconds) {
-        time = seconds;
+        if (running) {
+            resetTimer();
+        }
+        timeRemaining = seconds;
         running = true;
         runTimer();
     }
@@ -140,21 +143,34 @@ public class Timer {
      * @param seconds time to convert
      * @return remaining seconds in the minutes
      */
-    public int getRemainingSeconds(int seconds) {
+    public int getSecondsLeftFromMinutes(int seconds) {
         return seconds % 60;
     }
 
     /**
-     * Returns current time in minutes and seconds.
-     * @return Array containing remaining minutes and remaining seconds in that order.
+     * Returns time in minutes and seconds.
+     * @param seconds to convert to minutes and seconds
+     * @return Array containing minutes and seconds in that order.
      */
-    public int[] getCurrentTime() {
+    public int[] SecondsToTime(int seconds) {
         int[] currentTime = new int[2];
-        currentTime[0] = getMinutesFromSeconds(time);
-        currentTime[1] = getRemainingSeconds(time);
+        currentTime[0] = getMinutesFromSeconds(seconds);
+        currentTime[1] = getSecondsLeftFromMinutes(seconds);
         return currentTime;
     }
 
+    /**
+     * Returns remaining time in minutes and seconds.
+     * @return Array containing remaining minutes and remaining seconds in that order.
+     */
+    public int[] RemainingTime() {
+        return SecondsToTime(timeRemaining);
+    }
+
+    /**
+     * Returns if the timer is running
+     * @return is timer running
+     */
     public Boolean isRunning() {
         return running;
     }
@@ -172,5 +188,13 @@ public class Timer {
      */
     public Boolean getTimerFinished() {
         return timerFinished;
+    }
+
+    /**
+     * Updates the GUI to show the remaining time.
+     */
+    private void updateGUI() {
+        int[] currentTime = RemainingTime();
+        handler.post(() -> timerTextView.setText(String.valueOf(currentTime[0]) + ":" + String.valueOf(currentTime[1])));
     }
 }
