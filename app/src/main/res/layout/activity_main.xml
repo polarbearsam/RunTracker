@@ -12,7 +12,9 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black" />
+        android:background="@color/black"
+        android:title=""
+        />
 
     <!-- FrameLayout for Fragment -->
     <FrameLayout
