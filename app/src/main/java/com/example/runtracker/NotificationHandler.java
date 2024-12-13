@@ -33,7 +33,7 @@ public class NotificationHandler {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         if (ActivityCompat.checkSelfPermission(context,
         Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            Log.e("NotificationHandler", "Notification permission not granted!");
+            Log.w("NotificationHandler", "Notification permission not granted!");
         } else {
             Log.d("NotificationHandler", "Sending notification!");
             notificationManager.notify(1, notification);

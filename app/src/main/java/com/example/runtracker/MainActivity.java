@@ -1,21 +1,18 @@
 package com.example.runtracker;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -105,6 +102,12 @@ public class MainActivity extends AppCompatActivity {
             // or other notification behaviors after this.
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
+        }
+
+        Log.d("MainActivity", "Notification channel created");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Log.d("MainActivity", "Requesting permission");
+            PermissionHandler.requestPermission(this, this, Manifest.permission.POST_NOTIFICATIONS);
         }
     }
 }
