@@ -13,9 +13,12 @@ navigationFragment = "2.6.0"
 navigationUi = "2.6.0"
 
 [libraries]
+activity-compose = { module = "androidx.activity:activity-compose" }
+androidx-material = { module = "androidx.compose.material:material" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
 core-ktx-v190 = { module = "androidx.core:core-ktx", version.ref = "coreKtxVersion" }
+foundation = { module = "androidx.compose.foundation:foundation" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

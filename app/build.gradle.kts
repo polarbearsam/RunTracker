@@ -41,7 +41,12 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+    implementation(platform("androidx.compose:compose-bom:2023.10.01"))
+    implementation(libs.activity.compose)
+    implementation(libs.foundation)
+    implementation(libs.androidx.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
 }
