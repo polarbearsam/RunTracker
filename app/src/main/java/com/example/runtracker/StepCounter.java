@@ -10,6 +10,9 @@ import android.hardware.SensorEvent;
 public class StepCounter extends Activity implements SensorEventListener2 {
     public SensorManager mSensorManager;
     public Sensor steps;
+    public boolean active;
+
+    public int stepcount;
 
     public StepCounter ()
     {
@@ -19,21 +22,39 @@ public class StepCounter extends Activity implements SensorEventListener2 {
         {
             System.out.println("sensor not found");
         }
+        active = false;
     }
     protected void onResume() {
         super.onResume();
-        mSensorManager.registerListener(this, steps, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     protected void onPause() {
         super.onPause();
-        mSensorManager.unregisterListener(this);
+    }
+    public void toggle(){
+        if (active == false) {
+            mSensorManager.registerListener(this, steps, SensorManager.SENSOR_DELAY_NORMAL);
+            active = true;
+        }
+        else {
+            mSensorManager.unregisterListener(this);
+            active = false;
+        }
     }
 
+    public void reset () {
+        stepcount = 0;
+        mSensorManager.unregisterListener(this);
+        active = false;
+    }
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 
     public void onSensorChanged(SensorEvent event) {
+        if (event == null) return;
+
+        stepcount += event.values[0];
     }
 
     @Override
@@ -43,6 +64,6 @@ public class StepCounter extends Activity implements SensorEventListener2 {
 
     public int getStepcount ()
     {
-        return 0;
+        return stepcount;
     }
 }
