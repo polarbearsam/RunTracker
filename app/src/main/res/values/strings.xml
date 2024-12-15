@@ -47,4 +47,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="channel_name">Run Timer</string>
     <string name="channel_description">Notifies you when a run is finished.</string>
+    <string name="timerFinishedTitle">Run Finished!</string>
+    <string name="timerFinishedText">Congratulations! You\'ve completed your run!</string>
 </resources>

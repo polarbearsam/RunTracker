@@ -2,6 +2,8 @@ package com.example.runtracker;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -20,6 +22,7 @@ import androidx.fragment.app.FragmentManager;
 
 
 public class MainActivity extends AppCompatActivity {
+    public static SensorManager sensorManager;
 
     public NotificationHandler notificationHandler;
 
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         createNotificationChannel();
+        sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
 
         notificationHandler = new NotificationHandler(this);
         Log.d("MainActivity", "NotificationHandler initialized: " + (notificationHandler != null));

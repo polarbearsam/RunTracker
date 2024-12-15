@@ -6,6 +6,7 @@
  */
 package com.example.runtracker;
 
+import android.hardware.SensorManager;
 import android.util.Log;
 import android.widget.TextView;
 import android.os.Handler;
@@ -21,12 +22,14 @@ public class Timer {
     private final TextView timerTextView;
     private final Handler handler;
     private int timeRemaining = 0;
+    private final StepCounter stepCounter;
 
     /**
      * Creates a timer object
      * @param textView timer will update
      */
     public Timer(TextView textView) {
+        this.stepCounter = new StepCounter();
         this.timerTextView = textView;
         this.handler = new Handler(Looper.getMainLooper());
     }
@@ -36,6 +39,7 @@ public class Timer {
      */
     private void runTimer() {
         running = true;
+        stepCounter.toggle();
 
         // Decreasing timeRemaining by 1 every second, must be run as a separate thread
         Thread thread = new Thread(() -> {
@@ -50,9 +54,11 @@ public class Timer {
                 updateGUI();
             }
 
+            stepCounter.toggle();
             if (timeRemaining <= 0) {
                 timerFinished = true;
                 running = false;
+                Log.i("Timer", stepCounter.getStepcount() + " steps taken.");
                 Log.i("Timer", "Timer finished!");
             } else {
                 Log.i("Timer", "Timer stopped.");

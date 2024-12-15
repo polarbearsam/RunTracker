@@ -6,7 +6,9 @@ import android.hardware.SensorEventListener2;
 import android.hardware.SensorManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
+import android.util.Log;
 
+// Either the onCreate() function needs to be added to this class or it CANNOT be an Activity.
 public class StepCounter extends Activity implements SensorEventListener2 {
     public SensorManager mSensorManager;
     public Sensor steps;
@@ -16,11 +18,11 @@ public class StepCounter extends Activity implements SensorEventListener2 {
 
     public StepCounter ()
     {
-        mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+        this.mSensorManager = MainActivity.sensorManager; // CANNOT be called before onCreate() is called.
         steps = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         if (steps == null)
         {
-            System.out.println("sensor not found");
+            Log.e("StepCounter", "No steps sensor!");
         }
         active = false;
     }
@@ -32,7 +34,7 @@ public class StepCounter extends Activity implements SensorEventListener2 {
         super.onPause();
     }
     public void toggle(){
-        if (active == false) {
+        if (!active) {
             mSensorManager.registerListener(this, steps, SensorManager.SENSOR_DELAY_NORMAL);
             active = true;
         }
