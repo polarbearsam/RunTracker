@@ -63,8 +63,8 @@ public class StepCounter extends Activity implements SensorEventListener2 {
             originalSteps = (int) event.values[0];
             firstEvent = false;
         }
-        Log.i("StepCounter", "Steps added: " + event.values[0]);
         stepcount = (int) event.values[0] - originalSteps;
+        Log.i("StepCounter", "Current steps: " + stepcount);
     }
 
     @Override
