@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/secondary_color"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/historyTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Run History"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:padding="8dp" />
+
+        <TextView
+            android:id="@+id/historyItem1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Run Time: -- min | Steps: --"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:padding="4dp" />
+
+        <TextView
+            android:id="@+id/historyItem2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Run Time: -- min | Steps: --"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:padding="4dp" />
+
+        <TextView
+            android:id="@+id/historyItem3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Run Time: -- min | Steps: --"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:padding="4dp" />
+
+        <TextView
+            android:id="@+id/historyItem4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4. Run Time: -- min | Steps: --"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:padding="4dp" />
+
+        <TextView
+            android:id="@+id/historyItem5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="5. Run Time: -- min | Steps: --"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:padding="4dp" />
+
+        <TextView
+            android:id="@+id/historyItem6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="6. Run Time: -- min | Steps: --"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:padding="4dp" />
+
+        <TextView
+            android:id="@+id/historyItem7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="7. Run Time: -- min | Steps: --"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:padding="4dp" />
+
+        <TextView
+            android:id="@+id/historyItem8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="8. Run Time: -- min | Steps: --"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:padding="4dp" />
+
+        <TextView
+            android:id="@+id/historyItem9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="9. Run Time: -- min | Steps: --"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:padding="4dp" />
+
+        <TextView
+            android:id="@+id/historyItem10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="10. Run Time: -- min | Steps: --"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:padding="4dp" />
+
+
+
+    </LinearLayout>
+</ScrollView>

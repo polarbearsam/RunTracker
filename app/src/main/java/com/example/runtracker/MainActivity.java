@@ -19,6 +19,10 @@ import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -26,12 +30,20 @@ public class MainActivity extends AppCompatActivity {
 
     public NotificationHandler notificationHandler;
 
+    private RunTrackerViewModel viewModel;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        viewModel = new ViewModelProvider(this).get(RunTrackerViewModel.class);
+
+
+
 
         createNotificationChannel();
         sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
@@ -63,12 +75,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        List<Integer> runTimes = viewModel.getRunTimes();
+        List<Integer> stepCounts = viewModel.getStepCounts();
 
         if (id == R.id.home) {
             replaceFragment(new FirstFragment());
             return true;
         } else if (id == R.id.preferences) {
             replaceFragment(new PreferencesFragment());
+            return true;
+        } else if (id == R.id.history) {
+            replaceFragment(new HistoryFragment());
             return true;
         } else {
             return super.onOptionsItemSelected(item);

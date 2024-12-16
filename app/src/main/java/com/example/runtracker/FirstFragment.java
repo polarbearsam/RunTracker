@@ -15,6 +15,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.example.runtracker.NotificationHandler;
+import androidx.lifecycle.ViewModelProvider;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class FirstFragment extends Fragment {
@@ -22,6 +26,13 @@ public class FirstFragment extends Fragment {
     private Timer timer;
     private NotificationHandler notificationHandler;
     private StepCounter stepCounter;
+    private RunTrackerViewModel viewModel;
+
+    private List<Integer> runTimes = new ArrayList<>();
+    private List<Integer> stepCounts = new ArrayList<>();
+
+    public int currentTime = 0;
+    public int steps = 0;
 
     @Nullable
     @Override
@@ -37,6 +48,9 @@ public class FirstFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        viewModel = new ViewModelProvider(requireActivity()).get(RunTrackerViewModel.class);
 
         //getting the notification handler from main activity
         notificationHandler = ((MainActivity) requireActivity()).notificationHandler;
@@ -70,6 +84,7 @@ public class FirstFragment extends Fragment {
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // starts the timer and step counter
+                currentTime = Integer.parseInt(editText.getText().toString());
                 timer.startTimer();
                 stepCounter.toggle();
 
@@ -89,6 +104,17 @@ public class FirstFragment extends Fragment {
                     if (timer.getTimerFinished()) {
                         notificationHandler.sendNotification(notificationHandler.createNotification());
                         Log.d("FirstFragment", "NotificationHandler in fragment: " + (notificationHandler != null));
+                        steps = stepCounter.getStepcount();
+
+                        if (runTimes.size() >= 10) {
+                            runTimes.remove(0);
+                            stepCounts.remove(0);
+                        }
+
+                        runTimes.add(currentTime);
+                        stepCounts.add(steps);
+
+                        viewModel.addRunData(currentTime, steps);
                     }
                 });
 
@@ -101,6 +127,8 @@ public class FirstFragment extends Fragment {
             public void onClick(View v) {
                 // resets the timer to 0s and stops it running
                 timer.resetTimer();
+                steps = stepCounter.getStepcount();
+                viewModel.addRunData(currentTime, steps);
             }
         });
 

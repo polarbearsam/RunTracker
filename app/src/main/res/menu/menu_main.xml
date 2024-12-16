@@ -10,4 +10,8 @@
         android:id="@+id/preferences"
         android:title="Run Calculator" />
 
+    <item
+        android:id="@+id/history"
+        android:title="History" />
+
 </menu>
