@@ -15,22 +15,22 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="170dp"
-            android:layout_height="31dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="125dp"
-            android:layout_marginTop="242dp"
+            android:layout_marginTop="262dp"
             android:layout_marginEnd="105dp"
-            android:layout_marginBottom="30dp"
-            android:text="timeBox"
+            android:layout_marginBottom="10dp"
+            android:text="Current Time:"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/white"
+            android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/timerTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Current Time:" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/timerTextView"
@@ -86,7 +86,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_background"
+            android:fontFamily="@font/b612"
             android:text="Reset"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
