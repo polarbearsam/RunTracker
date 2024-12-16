@@ -110,7 +110,7 @@
             android:layout_marginBottom="21dp"
             android:fontFamily="@font/b612"
             android:hint="Set Time Here"
-            android:inputType="number"
+            android:inputType="text"
             android:padding="10dp"
             android:textAlignment="center"
             android:textColor="@color/white"

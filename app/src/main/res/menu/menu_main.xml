@@ -4,10 +4,10 @@
     tools:context="com.example.runtracker.MainActivity">
     <item
         android:id="@+id/home"
-        android:title="Home" />
+        android:title="Timer" />
 
     <item
         android:id="@+id/preferences"
-        android:title="Preferences" />
+        android:title="Run Calculator" />
 
 </menu>

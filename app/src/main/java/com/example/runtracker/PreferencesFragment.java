@@ -6,11 +6,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import android.content.ClipboardManager;
+import android.content.ClipData;
+import android.content.Context;
+import android.widget.Toast;
 
 
 public class PreferencesFragment extends Fragment {
@@ -20,6 +28,21 @@ public class PreferencesFragment extends Fragment {
     private EditText editPace;
     private Button calcButton;
     private Button clearButton;
+    private Button copyButton;
+
+
+    public void copyToClipboard(String textToCopy) {
+        // Getting the clipboard service
+        ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+
+        if (clipboard != null)
+        {
+            ClipData clip = ClipData.newPlainText("label", textToCopy); // creates clip data
+            clipboard.setPrimaryClip(clip); // sets the clipboard text
+            Toast.makeText(getActivity(), "Text copied to clipboard", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     @Nullable
     @Override
@@ -37,16 +60,23 @@ public class PreferencesFragment extends Fragment {
         editTime = view.findViewById(R.id.timeEdit);
         calcButton = view.findViewById(R.id.calculateButton);
         clearButton = view.findViewById(R.id.clearButton);
+        copyButton = view.findViewById(R.id.copyButton);
 
 
         calcButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
+                // initalize values
                 double distance = 0;
                 double pace = 0;
                 double time = 0;
 
+                // format for rounding
+                DecimalFormat df = new DecimalFormat("#");
+                df.setRoundingMode(RoundingMode.HALF_UP);
 
+
+                // gets the current values and sets not set values to 0
                 String distanceText = editDistance.getText().toString();
                 distance = !distanceText.isEmpty() ? Double.parseDouble(distanceText): 0;
 
@@ -57,11 +87,11 @@ public class PreferencesFragment extends Fragment {
                 time = !timeText.isEmpty() ? Double.parseDouble(timeText) : 0;
 
 
+                // calculates and sets values based on what the user has already input
                 if (distance == 0 && time != 0 && pace != 0){
                     distance = (pace * (time/60));
                     editDistance.setText(String.valueOf(distance));
                 }
-
 
                 if (pace == 0 && time != 0 && distance != 0) {
                     pace = ((60*distance)/time);
@@ -70,7 +100,8 @@ public class PreferencesFragment extends Fragment {
 
                 if (time == 0 && pace != 0 && distance != 0) {
                     time = (60*distance)/pace;
-                    editTime.setText(String.valueOf(time));
+                    String formattedTime = df.format(time);
+                    editTime.setText(formattedTime);
                 }
 
 
@@ -81,8 +112,19 @@ public class PreferencesFragment extends Fragment {
         clearButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
+                editDistance.setText("");
+                editPace.setText("");
+                editTime.setText("");
 
 
+            }
+        });
+
+        copyButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                String textToCopy = editTime.getText().toString(); // gets time string
+                copyToClipboard(textToCopy); //calls copy function
             }
         });
 

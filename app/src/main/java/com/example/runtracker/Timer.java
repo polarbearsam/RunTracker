@@ -201,6 +201,12 @@ public class Timer {
      */
     private void updateGUI() {
         int[] currentTime = RemainingTime();
-        handler.post(() -> timerTextView.setText(String.valueOf(currentTime[0]) + ":" + String.valueOf(currentTime[1])));
+        if (currentTime[1] == -1){
+            handler.post(() -> timerTextView.setText(String.valueOf(currentTime[0]) + ":00" ));
+        }
+        else {
+            handler.post(() -> timerTextView.setText(String.valueOf(currentTime[0]) + ":" + String.valueOf(currentTime[1])));
+        }
+
     }
 }
