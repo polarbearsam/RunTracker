@@ -55,7 +55,6 @@ public class FirstFragment extends Fragment {
         // setButton action listener, runs code on button click
         setButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // sets the timer to 60 seconds | This will become a user inputted variable later
                 Log.d("FirstFragment", "setButton clicked");
                 String userTime = editText.getText().toString();
                 int userNumber = Integer.parseInt(userTime);

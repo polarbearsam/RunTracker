@@ -9,49 +9,83 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PreferencesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class PreferencesFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public PreferencesFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PreferencesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PreferencesFragment newInstance(String param1, String param2) {
-        PreferencesFragment fragment = new PreferencesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private EditText editDistance;
+    private EditText editTime;
+    private EditText editPace;
+    private Button calcButton;
+    private Button clearButton;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_preferences, container, false);
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+
+
+        editDistance = view.findViewById(R.id.distanceEdit);
+        editPace = view.findViewById(R.id.paceEdit);
+        editTime = view.findViewById(R.id.timeEdit);
+        calcButton = view.findViewById(R.id.calculateButton);
+        clearButton = view.findViewById(R.id.clearButton);
+
+
+        calcButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                double distance = 0;
+                double pace = 0;
+                double time = 0;
+
+
+                String distanceText = editDistance.getText().toString();
+                distance = !distanceText.isEmpty() ? Double.parseDouble(distanceText): 0;
+
+                String paceText = editPace.getText().toString();
+                pace = !paceText.isEmpty() ? Double.parseDouble(paceText) : 0;
+
+                String timeText = editTime.getText().toString();
+                time = !timeText.isEmpty() ? Double.parseDouble(timeText) : 0;
+
+
+                if (distance == 0 && time != 0 && pace != 0){
+                    distance = (pace * (time/60));
+                    editDistance.setText(String.valueOf(distance));
+                }
+
+
+                if (pace == 0 && time != 0 && distance != 0) {
+                    pace = ((60*distance)/time);
+                    editPace.setText(String.valueOf(pace));
+                }
+
+                if (time == 0 && pace != 0 && distance != 0) {
+                    time = (60*distance)/pace;
+                    editTime.setText(String.valueOf(time));
+                }
+
+
+
+            }
+        });
+
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+
+
+            }
+        });
+
+
     }
 }
