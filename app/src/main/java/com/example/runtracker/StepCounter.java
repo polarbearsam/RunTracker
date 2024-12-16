@@ -13,6 +13,8 @@ public class StepCounter extends Activity implements SensorEventListener2 {
     public SensorManager mSensorManager;
     public Sensor steps;
     public boolean active;
+    private boolean firstEvent = true;
+    private int originalSteps = 0;
 
     public int stepcount;
 
@@ -48,6 +50,8 @@ public class StepCounter extends Activity implements SensorEventListener2 {
         stepcount = 0;
         mSensorManager.unregisterListener(this);
         active = false;
+        firstEvent = false;
+        originalSteps = 0;
     }
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
@@ -55,8 +59,12 @@ public class StepCounter extends Activity implements SensorEventListener2 {
 
     public void onSensorChanged(SensorEvent event) {
         if (event == null) return;
-
-        stepcount += event.values[0];
+        if (firstEvent) {
+            originalSteps = (int) event.values[0];
+            firstEvent = false;
+        }
+        Log.i("StepCounter", "Steps added: " + event.values[0]);
+        stepcount = (int) event.values[0] - originalSteps;
     }
 
     @Override
