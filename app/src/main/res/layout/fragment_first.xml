@@ -55,52 +55,44 @@
             android:id="@+id/setButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="150dp"
-            android:layout_marginTop="138dp"
-            android:layout_marginEnd="150dp"
-            android:layout_marginBottom="221dp"
+            android:layout_marginTop="128dp"
             android:background="@drawable/button_background"
             android:fontFamily="@font/b612"
             android:text="Set"
             android:textColor="@color/white"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.182"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timerTextView"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/timerTextView" />
 
         <Button
             android:id="@+id/startButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="75dp"
-            android:layout_marginTop="270dp"
-            android:layout_marginEnd="90dp"
-            android:layout_marginBottom="150dp"
-            android:text="Start"
+            android:layout_marginTop="40dp"
             android:background="@drawable/button_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/resetButton"
+            android:fontFamily="@font/b612"
+            android:text="Start"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/setButton" />
 
         <Button
             android:id="@+id/resetButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="554dp"
-            android:layout_marginEnd="80dp"
-            android:layout_marginBottom="135dp"
-            android:text="Reset"
             android:background="@drawable/button_background"
+            android:text="Reset"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/startButton"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.511" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/startButton"
+            app:layout_constraintTop_toBottomOf="@id/timerTextView"
+            app:layout_constraintVertical_bias="0.49" />
 
         <EditText
             android:id="@+id/editText"
@@ -116,12 +108,14 @@
             android:padding="10dp"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="34sp"
             android:textColorHint="#9e9e9e"
+            android:textSize="34sp"
             app:layout_constraintBottom_toTopOf="@+id/startButton"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.666"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timerTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/timerTextView"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/textView2"
