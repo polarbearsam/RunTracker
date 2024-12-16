@@ -21,6 +21,7 @@ public class FirstFragment extends Fragment {
 
     private Timer timer;
     private NotificationHandler notificationHandler;
+    private StepCounter stepCounter;
 
     @Nullable
     @Override
@@ -43,13 +44,15 @@ public class FirstFragment extends Fragment {
 
         //widgets
         TextView timerTextView = view.findViewById(R.id.timerTextView);
+        TextView stepView = view.findViewById(R.id.stepView);
         EditText editText = view.findViewById(R.id.editText);
         Button setButton = view.findViewById(R.id.setButton);
         Button startButton = view.findViewById(R.id.startButton);
         Button resetButton = view.findViewById(R.id.resetButton);
 
-        //Initializing timer
+        //Initializing timer and step counter
         timer = new Timer(timerTextView);
+        stepCounter = new StepCounter();
 
 
 
@@ -66,8 +69,10 @@ public class FirstFragment extends Fragment {
         // startButton action listener, runs code on button click
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // starts the timer
+                // starts the timer and step counter
                 timer.startTimer();
+                stepCounter.toggle();
+
                 Thread thread = new Thread(() -> {
                     while (timer.isRunning()) {
                         try {
@@ -75,6 +80,10 @@ public class FirstFragment extends Fragment {
                         } catch (InterruptedException e) {
                             Log.e("FirstFragment", "Sleep interrupted!", new RuntimeException(e));
                         }
+
+                        getActivity().runOnUiThread(() -> {
+                            stepView.setText(String.valueOf(stepCounter.getStepcount()));
+                        });
                     }
                     Log.d("FirstFragment", String.valueOf(timer.getTimerFinished()));
                     if (timer.getTimerFinished()) {
