@@ -46,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         createNotificationChannel();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            PermissionHandler.requestPermission(this, this, Manifest.permission.ACTIVITY_RECOGNITION);
+        }
         sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
 
         notificationHandler = new NotificationHandler(this);
